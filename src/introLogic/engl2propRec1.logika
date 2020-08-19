@@ -1,0 +1,42 @@
+//The weather is not sunny, but it is not raining.
+
+p: the weather is sunny
+q: it is raining
+
+!p ^ !q
+
+//If it rains today, then it won't rain tomorrow.
+
+p: it rains today
+q: it will rain tomorrow
+
+p -> !q
+
+//If it is nice tomorrow, then I will go for a run, but only if I don't feel tired.
+//my translation: if it is nice tomorrow and I don't feel tired then I will go for a run
+
+p: it is nice tomorrow
+q: I will go for a run
+r: I feel tired
+
+(p ^ !r) -> q
+
+//I will not like radishes unless my tastes change or I learn to cook them in another way.
+//my translation: if my tastes don't change and I don't cook in another way,
+    //I promise I won't like radishes
+
+p: I will like radishes
+q: my tastes change
+r: I learn to cook them in another way
+
+!(q V r) -> !p
+(!q ^ !r) -> !p
+
+
+//If it snows today I will go sledding; otherwise I will stay inside.
+
+p: it snows today
+q: I will go sledding
+r: I will stay inside
+
+(p -> q) ^ (!p -> r)
