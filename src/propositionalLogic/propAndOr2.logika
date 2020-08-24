@@ -1,0 +1,11 @@
+//does this make sense?
+
+//NO!
+//p is true, q is true, r is false
+//premise would hold
+//conclusion would be false
+
+(p ∧ q) ∨ (p ∧ r) ⊢ (p ∨ q) ∧ r
+{
+
+}

@@ -1,0 +1,19 @@
+(p ∧ r) ∨ (q ∧ r) ⊢ (p ∨ q) ∧ r
+{
+    1. (p ∧ r) ∨ (q ∧ r)                    premise
+    2. {
+        3. p ∧ r                             assume
+        4. p                                 ^e1 3
+        5. r                                 ^e2 3
+        6. p ∨ q                             ∨i1 4
+        7. (p ∨ q) ∧ r                      ^i 6 5
+    }
+    8. {
+        9. q ∧ r                           assume
+        10. q                               ^e1 9
+        11. r                               ^e2 9
+        12. p ∨ q                           ∨i2 10
+        13. (p ∨ q) ∧ r                     ^i 12 11
+    }
+    14. (p ∨ q) ∧ r                         ∨e 1 2 8
+}
