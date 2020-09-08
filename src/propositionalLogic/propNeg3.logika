@@ -1,0 +1,14 @@
+p → q, q → r, ¬r ⊢ p → z
+{
+    1. p -> q       premise
+    2. q -> r       premise
+    3. !r           premise
+    4. {
+        5. p        assume
+        6. q        ->e 1 5
+        7. r        ->e 2 6
+        8. _|_      !e 7 3
+        9. z        _|_e 8
+    }
+    10. p->z        ->i 4
+}

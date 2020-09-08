@@ -1,0 +1,20 @@
+⊢ p ∨ ¬p
+{
+    1. {
+        2. !(p V !p)        assume
+        //want to get p or !p
+        //then use Vi to tack on the other
+        //then we have a contradiction
+        3. {
+            4. !p           assume
+            5. p V !p       Vi2 4
+            6. _|_          !e 5 2
+        }
+        7. p                pbc 3
+
+        //want a contradiction
+        8. p V !p           Vi1 7
+        9. _|_              !e 8 2
+    }
+    10. p V !p              pbc 1
+}
