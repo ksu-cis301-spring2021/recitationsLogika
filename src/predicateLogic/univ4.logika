@@ -1,0 +1,20 @@
+//∀x healthy(x) → happy(x) : Everyone who is healthy is also happy
+// (∀y healthy(y)) → ∀x happy(x) : If everyone is healthy, then everyone is happy
+
+∀x healthy(x) → happy(x)  ⊢ (∀y healthy(y)) → ∀x happy(x)
+{
+    1. ∀x healthy(x) → happy(x)             premise
+    2. {
+        3. ∀y healthy(y)                    assume
+        4. {
+            5. a
+            6. healthy(a) -> happy(a)       Ae 1 a
+            7. healthy(a)                   Ae 3 a
+            8. happy(a)                     ->e 6 7
+        }
+        9. A x happy(x)                     Ai 4
+        //try to get to A x happy(x)
+    }
+    //use ->i to conclude (∀y healthy(y)) → ∀x happy(x)
+    10. (∀y healthy(y)) → ∀x happy(x)      ->i 2
+}

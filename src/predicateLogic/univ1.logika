@@ -1,0 +1,29 @@
+//Q → ∀x P(x) : If Q, then all individuals are P
+//∀x (Q → P(x)) : For all individuals, if Q, then that individual is P
+
+//Q: the Earth is round
+//individuals: kids
+// P(x): x likes ice cream
+
+//Q → ∀x P(x) :
+    //If the Earth is round, then all kids like ice cream
+//∀x (Q → P(x)) :
+    //For every kid, if the Earth is round then they like ice cream
+
+Q → ∀x P(x) ⊢ ∀x (Q → P(x))
+{
+    1. Q → ∀x P(x)                      premise
+    2. {
+        3. a
+        4. {
+            //try to prove the implication
+            5. Q                        assume
+            6. A x P(x)                 ->e 1 5
+            7. P(a)                     Ae 6 a
+        }
+        8. Q->P(a)                      ->i 4
+        //want to get to Q->P(a)
+    }
+    //use Ai to conclude that Ax (Q -> P(x))
+    9. ∀x (Q → P(x))                    Ai 2
+}

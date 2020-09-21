@@ -1,0 +1,18 @@
+//Proving the other direction
+
+∀x (Q → P(x)) ⊢ Q → ∀x P(x)
+{
+    1. ∀x (Q → P(x))                    premise
+    2. {
+        3. Q                            assume
+        4. {
+            5. a
+            6. Q -> P(a)                Ae 1 a
+            7. P(a)                     ->e 6 3
+        }
+        //want get to Ax P(x)
+        8. A x P(x)                     Ai 4
+    }
+    //use ->i to conclude Q → ∀x P(x)
+    9. Q → ∀x P(x)                      ->i 2
+}

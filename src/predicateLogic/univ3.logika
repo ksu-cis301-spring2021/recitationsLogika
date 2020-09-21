@@ -1,0 +1,26 @@
+//∀x isHuman(x) → isMortal(x) : All humans are mortal
+//∀y isMortal(y) → hasSoul(y) : All mortals have a soul
+
+//∀x isHuman(x) → hasSoul(x) : All humans have a soul
+
+∀x isHuman(x) → isMortal(x), ∀y isMortal(y) → hasSoul(y)  ⊢ ∀x isHuman(x) → hasSoul(x)
+{
+    1. ∀x isHuman(x) → isMortal(x)              premise
+    2. ∀y isMortal(y) → hasSoul(y)              premise
+    3. {
+        4. a
+        5. isHuman(a) -> isMortal(a)            Ae 1 a
+        6. isMortal(a) → hasSoul(a)             Ae 2 a
+        //want to get to isHuman(a) → hasSoul(a)
+        7. {
+            8. isHuman(a)                       assume
+            9. isMortal(a)                      ->e 5 8
+            10. hasSoul(a)                      ->e 6 9
+            //want to get to hasSoul(a)
+        }
+        11. isHuman(a) -> hasSoul(a)            ->i 7
+    }
+
+    //Ai to conclude ∀x isHuman(x) → hasSoul(x)
+    12. A x isHuman(x) -> hasSoul(x)            Ai 3
+}
