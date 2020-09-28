@@ -1,0 +1,28 @@
+A x P(x) -> !Q(x) |- !(E x P(x) ^ Q(x))
+{
+    1. A x P(x) -> !Q(x)        premise
+    2. {
+        3. E x P(x) ^ Q(x)      assume
+        //we want to get a contradiction
+
+        4. {
+            5. a P(a) ^ Q(a)    assume
+
+            //plug a into my A statement
+            6. P(a) -> !Q(a)    Ae 1 a
+            7. P(a)             ^e1 5
+            8. Q(a)             ^e2 5
+            9. !Q(a)            ->e 6 7
+            10. _|_             !e 8 9
+            //want to get to a contradiction
+        }
+        //say that contradiction still holds
+        //use Ee
+        11. _|_                 Ee 3 4
+    }
+
+    //can conclude !(E x P(x) ^ Q(x)) using !i
+    12. !(E x P(x) ^ Q(x))      !i 2
+}
+
+

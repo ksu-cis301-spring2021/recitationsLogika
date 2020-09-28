@@ -1,0 +1,29 @@
+E y (A x P(x, y)) |- A x (E y P(x, y))
+{
+    1. E y (A x P(x, y))            premise
+    2. {
+        //plug into the E statement from line 1
+        //plug the b into the y
+        3. b A x P(x, b)            assume
+        //plug into the other variable/quantifier
+        4. {
+            5. a
+            //plug a in for x in the A statement on line 3
+            6. P(a, b)              Ae 3 a
+
+            //need to build A x (E y P(x, y)) from inside out
+            //can introduce A x AFTER block 4
+            //want to introduce Ey here, so it's ready
+
+            //the b was the y where this existed
+            7. E y P(a, y)          Ei 6 b
+        }
+        //what I got in block 4 holds A x, since a could be ANY individual
+        8. A x (E y P(x, y))        Ai 4
+
+        //want to get to A x (E y P(x, y))
+    }
+    //can conclude that A x (E y P(x, y)) still holds
+    //use Ee
+    9. A x (E y P(x, y))            Ee 1 2
+}
