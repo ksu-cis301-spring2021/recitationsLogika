@@ -1,0 +1,22 @@
+import org.sireum.logika._
+
+val x: Z = 7
+val y: Z = x + 5
+val z: Z = 2 * y
+val w: Z = 4 * x - z
+
+l"""{
+    1. x == 7                       premise
+    2. y == x + 5                   premise
+    3. z == 2 * y                   premise
+    4. w == 4 * x - z               premise
+    5. z == 2 * (x + 5)             subst1 2 3
+    6. z == 2 * x + 10              algebra 5
+    7. w == 4 * x - (2 * x + 10)    subst1 6 4
+    8. w + 10 == 2 * x              algebra 7
+    9. z == (w + 10) + 10           subst2 8 6
+   10. z == w + 20                  algebra 9
+   11. y == x + 5 ^ z == w + 20     ^i 2 10
+}"""
+
+assert(y == x + 5 & z == w + 20)

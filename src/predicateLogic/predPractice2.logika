@@ -22,8 +22,7 @@ A x (A y C(x) -> D(y)), E x C(x)  |- A y D(y)
         //we want to get to A y D(y)
     }
     //can conclude that what you showed in the block still holds
-    //using Ee. Can still conclude A y D(y).
-    //Well done watching videos and looking at examples. This is
-    //your reward.
+    //using Ee. Can still conclude A y D(y). Well done watching videos
+    //and looking at examples. This is your reward.
     11. A y D(y)                Ee 2 3
 }

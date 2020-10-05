@@ -1,0 +1,16 @@
+import org.sireum.logika._
+
+val first: Z = 4
+val diff: Z = 2
+val ans: Z = first + diff
+
+l"""{
+    1. first == 4           premise
+    2. diff == 2            premise
+    3. ans == first + diff  premise
+    4. ans == 4 + diff      subst1 1 3
+    5. ans == 4 + 2         subst1 2 4
+    6. ans == 6             algebra 5
+}"""
+
+assert(ans == 6)

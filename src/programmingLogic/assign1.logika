@@ -1,0 +1,38 @@
+import org.sireum.logika._
+
+var num: Z = 4
+val orig: Z = num
+val diff: Z = 2
+
+l"""{
+    1. num == 4             premise
+    2. orig == num          premise
+    3. diff == 2            premise
+}"""
+
+num = num + diff
+
+l"""{
+    1. num == num_old + diff    premise
+    2. orig == num_old          premise
+    3. num_old == 4             premise
+    4. diff == 2                premise
+    5. orig == 4                algebra 2 3
+    6. num == 6                 algebra 1 3 4
+}"""
+
+assert(num == 6)
+
+num = num - diff
+l"""{
+    1. num == num_old - diff    premise
+    2. num_old == 6             premise
+    3. diff == 2                premise
+    4. orig == 4                premise
+    5. num == 6 - diff          subst1 2 1
+    6. num == 6 - 2             subst1 3 5
+    7. num == 4                 algebra 6
+    8. num == orig              subst2 4 7
+}"""
+
+assert (num == orig)
