@@ -1,0 +1,55 @@
+import org.sireum.logika._
+
+//get two numbers, swap them, add one to each
+
+var x: Z = readInt()
+var y: Z = readInt()
+
+val xIn: Z = x
+val yIn: Z = y
+
+l"""{
+    1. xIn == x                 premise
+    2. yIn == y                 premise
+}"""
+
+val temp: Z = x
+l"""{
+    1. temp == x                premise
+    2. xIn == x                 premise
+    3. temp == xIn              subst2 2 1
+}"""
+
+x = y
+l"""{
+    1. x == y                   premise
+    2. yIn == y                 premise
+    3. x == yIn                 subst2 2 1
+}"""
+
+y = temp
+l"""{
+    1. y == temp                premise
+    2. temp == xIn              premise
+    3. x == yIn                 premise
+    4. y == xIn                 algebra 1 2
+}"""
+
+x = x + 1
+l"""{
+    1. x == x_old + 1           premise
+    2. x_old == yIn             premise
+    3. y == xIn                 premise
+    4. x == yIn + 1             subst1 2 1
+}"""
+
+y = y + 1
+l"""{
+    1. y == y_old + 1           premise
+    2. y_old == xIn             premise
+    3. y == xIn + 1             subst1 2 1
+    4. x == yIn + 1             premise
+    5. x == yIn + 1 ^ y == xIn + 1  ^i 4 3
+}"""
+
+assert(x == yIn + 1 & y == xIn + 1)

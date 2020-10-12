@@ -1,0 +1,35 @@
+Domain: kids
+
+B(x): x wears a blue shirt
+H(x): x wears a hat
+P(x): x likes pizza
+
+Translate to predicate logic:
+
+1) Everyone wearing a hat is also wearing a blue shirt
+
+A x H(x) -> B(x)
+
+2) There is a kid wearing a hat who likes pizza.
+
+E x H(x) ^ P(x)
+
+3) Everyone is either wearing a blue shirt or a hat, but not both.
+
+A x ((B(x) V H(x)) ^ !(B(x) ^ H(x)))
+
+********************************************
+Translate to English (domain: people):
+
+Sib(x, y): x is a sibling of y //if x is a sibling of y, in English, then y is also a sibling of x
+O(x, y): x is older than y
+
+Mary: a person
+
+1) A x Sib(x, Mary) -> O(x, Mary)
+
+All of Mary's siblings are older than her.
+
+2) E x Sib(x, Mary) ^ (A y (x != y) -> O(x, y))
+
+Mary has a sibling who is older than all other people.

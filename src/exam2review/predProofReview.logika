@@ -1,0 +1,19 @@
+A x A y (S(y) -> P(x)) |- (E y S(y)) -> (A x P(x))
+{
+    1. A x A y (S(y) -> P(x))       premise
+    2. {
+        3. E y S(y)                 assume
+        4. {
+            5. a S(a)               assume
+            6. {
+                7. b                    //want to plug in for the x first in 1
+                8. A y (S(y) -> P(b))   Ae 1 b
+                9. S(a) -> P(b)         Ae 8 a
+                10. P(b)                ->e 9 5
+            }
+            11. A x P(x)                Ai 6
+        }
+        12. A x P(x)                    Ee 3 4
+    }
+    13. (E y S(y)) -> (A x P(x))        ->i 2
+}
