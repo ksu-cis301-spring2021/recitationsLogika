@@ -1,0 +1,47 @@
+import org.sireum.logika._
+
+//the previous total at a store (based on previous purchases)
+val previousTotal: Z = readInt()
+//how many shirts the user wants to buy
+var numShirts: Z = readInt()
+
+//cost of shirts:
+    //4 or more shirts: $15.00 each
+    //fewer than 4 shirts: $18.00 each
+
+//want to update newTotal to be the amount owed at a store after
+//adding on the shirt costs
+var newTotal: Z = previousTotal
+
+if (numShirts >= 4) {
+    newTotal = newTotal + numShirts*15
+    l"""{
+        1. newTotal == newTotal_old + numShirts*15      premise //from the assignment
+        2. numShirts >= 4                               premise //from the condition
+        3. newTotal_old == previousTotal                premise //from original newTotal assignment
+        4. newTotal == previousTotal + numShirts*15     subst1 3 1
+        5. !(numShirts >= 4) V newTotal == previousTotal + numShirts*15     Vi2 4
+        6. numShirts >= 4 V newTotal == previousTotal + numShirts*18        Vi1 2
+    }"""
+} else {
+    newTotal = newTotal + numShirts*18
+
+    l"""{
+        1. newTotal == newTotal_old + numShirts*18      premise //from the assignment
+        2. !(numShirts >= 4)                            premise //from the else
+        3. newTotal_old == previousTotal                premise //from the original newTotal assignment
+        4. newTotal == previousTotal + numShirts*18     subst1 3 1
+        5. !(numShirts >= 4) V newTotal == previousTotal + numShirts*15     Vi1 2
+        6. numShirts >= 4 V newTotal == previousTotal + numShirts*18        Vi2 4
+    }"""
+}
+
+//If there were 4 or more shirts, newTotal is previousTotal + $15/shirt
+    //numShirts >= 4 -> newTotal == previousTotal + numShirts*15
+//If there were fewer than 4 shirts, newTotal is previousTotal + $18/shirt
+    //!(numShirts >= 4) -> newTotal == previousTotal + numShirts*18
+
+//rewrite of the form !p V q
+
+assert(!(numShirts >= 4) | newTotal == previousTotal + numShirts*15)
+assert(numShirts >= 4 | newTotal == previousTotal + numShirts*18)

@@ -1,0 +1,40 @@
+import org.sireum.logika._
+
+val num: Z = readInt()
+
+//want to update absNum to be the absolute value of num
+var absNum: Z = 0
+
+if (num < 0) {
+    //this will "undo" the negative
+    absNum = num * -1
+
+    //must have a logic block after EACH variable update
+    l"""{
+        1. absNum == num * -1       premise //from the assignment statement
+        2. num < 0                  premise //from the condition
+        3. !(num < 0) V absNum == num * -1  Vi2 1
+        4. num < 0 V absNum == num          Vi1 2
+    }"""
+} else {
+    absNum = num
+
+    l"""{
+        1. absNum == num        premise //from the assignment statement
+        2. !(num < 0)           premise //from the else
+        3. !(num < 0) V absNum == num * -1  Vi1 2
+        4. num < 0 V absNum == num          Vi2 1
+    }"""
+}
+
+//this logic block is optional, to tie together what you learned in both branches
+l"""{
+    1. !(num < 0) V absNum == num * -1      premise
+    2. num < 0 V absNum == num              premise
+}"""
+
+//if num < 0, then absNum is now num * -1
+//if !(num < 0), then absNum is now num
+//instead of p->q, must do !p v q
+assert(!(num < 0) | absNum == num * -1)
+assert(num < 0 | absNum == num)
