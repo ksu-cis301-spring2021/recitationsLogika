@@ -1,0 +1,33 @@
+import org.sireum.logika._
+
+//gets the nth even number (the 0th is 0, the 1st is 2, etc.)
+
+def nthEven(n: Z): Z = {
+    l"""{
+        requires n >= 0
+        ensures result == 2 * n
+    }"""
+
+    var cur: Z = 0
+    var count: Z = 0
+
+    while (count != n) {
+        l"""{
+            invariant cur == 2*count
+            modifies cur, count
+        }"""
+
+        cur = cur + 2
+        count = count + 1
+    }
+    return cur
+}
+
+/////// Test below /////////////
+var test: Z = 0
+var call: Z = nthEven(test)
+assert(call == 0)
+
+test = 4
+call = nthEven(test)
+assert(call == 8)

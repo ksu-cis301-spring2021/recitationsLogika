@@ -1,0 +1,54 @@
+import org.sireum.logika._
+
+//gets the nth even number (the 0th is 0, the 1st is 2, 2nd is 4, 3rd is 6, etc.)
+def nthEven(n: Z): Z = {
+    l"""{
+        //precondition and postcondition
+        requires n >= 0
+        ensures result == 2*n
+    }"""
+
+    var cur: Z = 0
+    var count: Z = 0
+
+    //prove the invariant holds before the loop begins
+    l"""{
+        1. n >= 0               premise
+        2. cur == 0             premise
+        3. count == 0           premise
+        4. cur == 2*count       algebra 2 3
+    }"""
+    while (count != n) {
+        l"""{
+            invariant cur == 2*count
+            modifies cur, count
+        }"""
+
+        cur = cur + 2
+        l"""{
+            1. cur == cur_old + 2           premise //the variable update
+            2. cur_old == 2*count           premise //from the invariant
+            3. cur == 2*count + 2           algebra 1 2
+        }"""
+
+        count = count + 1
+        l"""{
+            1. count == count_old + 1       premise //the variable update
+            2. cur == 2*count_old + 2       premise //from the previous logic block
+            3. cur == 2*(count-1) + 2       algebra 1 2
+            4. cur == 2*count               algebra 3
+        }"""
+
+        //prove that the invariant holds by the end of the iteration
+    }
+
+    //prove the postcondition holds
+    l"""{
+        1. cur == 2*count                   premise //the invariant still holds
+        2. !(count != n)                    premise //the loop condition is false
+        3. count == n                       algebra 2
+        4. cur == 2*n                       algebra 1 3
+    }"""
+
+    return cur
+}

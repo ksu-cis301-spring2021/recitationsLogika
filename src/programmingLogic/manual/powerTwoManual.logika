@@ -1,0 +1,82 @@
+import org.sireum.logika._
+
+l"""{
+    fact
+        def p2(i: Z): Z
+            //base case
+            p0. p2(0) == 1 //2^0 is 1
+            pn. A x: Z x > 0 -> p2(x) == p2(x-1) * 2
+}"""
+
+//Should return 2^n
+def powerTwo(n: Z): Z = {
+    l"""{
+        requires n >= 0 //can only calculate non-negative powers
+        ensures result == p2(n)
+    }"""
+
+    var cur: Z = 1 //current power of 2
+    var count: Z = 0 //how many multiplications I've done
+
+    //prove loop invariant holds before loop begins
+    l"""{
+        1. cur == 1             premise //from above assignment
+        2. count == 0           premise //from above assignment
+        3. n >= 0               premise //precondition holds
+        4. p2(0) == 1           fact p0
+        5. cur == p2(count)     algebra 1 2 4
+        6. count >= 0           algebra 2
+        7. count <= n           algebra 2 3
+    }"""
+    while (count != n) {
+        l"""{
+            invariant cur == p2(count)
+                //specify the range of the loop counter (count)
+                //want to do this when using a recursive fact definition
+                count >= 0
+                count <= n
+            modifies cur, count
+        }"""
+
+        cur = cur * 2
+        l"""{
+            1. cur == cur_old * 2       premise     //variable update
+            2. count != n               premise     //loop condition holds
+            3. cur_old == p2(count)     premise     //loop invariant holds
+            4. count >= 0               premise     //loop invariant, part 2
+            5. count <= n               premise     //loop invariant, part 3
+            6. cur == p2(count) * 2     algebra 1 3
+        }"""
+
+        count = count + 1
+        l"""{
+            1. count == count_old + 1       premise //variable update
+            2. cur == p2(count_old) * 2     premise //from the previous logic block
+            3. count_old >= 0               premise //from previous logic block
+            4. count_old <= n               premise //from previous logic block
+            5. count_old != n               premise //from previous logic block
+            6. A x: Z x > 0 -> p2(x) == p2(x-1) * 2 fact pn
+            7. count > 0 -> p2(count) == p2(count-1) * 2    Ae 6 count
+            8. count > 0                    algebra 1 3
+            9. p2(count) == p2(count-1) * 2 ->e 7 8
+            10. cur == p2(count-1) * 2      algebra 1 2
+            11. cur == p2(count)            algebra 9 10
+            12. count >= 0                  algebra 8
+            13. count <= n                  algebra 1 4 5
+        }"""
+
+        //show invariant holds at end of iteration
+    }
+
+    //show that the postcondtion holds
+    l"""{
+        1. !(count != n)                    premise //I know loop condition is false
+        2. cur == p2(count)                 premise //1st part invariant holds
+        3. count >= 0                       premise //2nd part invariant holds
+        4. count <= n                       premise //3rd part invariant holds
+        5. count == n                       algebra 1
+        6. cur == p2(n)                     algebra 2 5
+    }"""
+    //need to show cur is p2(n)
+    return cur
+}

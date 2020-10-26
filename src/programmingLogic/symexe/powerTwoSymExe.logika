@@ -1,0 +1,42 @@
+import org.sireum.logika._
+
+l"""{
+    fact
+        def p2(n: Z): Z
+            p0. p2(0) == 1
+            pn. A x: Z x > 0 -> p2(x) == p2(x-1) * 2
+}"""
+
+def powerTwo(n: Z): Z = {
+    l"""{
+        requires n >= 0
+        ensures result == p2(n)
+    }"""
+
+    var cur: Z = 1
+    var count: Z = 0
+
+    while (count != n) {
+        l"""{
+            invariant cur == p2(count)
+                count >= 0
+                count <= n
+            modifies cur, count
+        }"""
+        cur = cur * 2
+        count = count + 1
+    }
+
+    return cur
+}
+
+/////// Test below /////////////
+var test: Z = 0
+var call: Z = powerTwo(test)
+
+assert(call == 1)
+
+test = 4
+call = powerTwo(test)
+
+assert(call == 16)
