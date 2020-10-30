@@ -1,0 +1,56 @@
+import org.sireum.logika._
+
+//shift a sequence to the left one position,
+//wrapping the first element back to the end
+//
+//example: (2,4,6,8,10) should become (4,6,8,10,2)
+def leftShift(a: ZS): Unit = {
+    l"""{
+        requires a.size >= 1
+        modifies a
+        ensures
+            //sizes do not change
+            a.size == a_in.size
+
+            //all but the last element should be updated to the one
+            //one that was to the right of it
+            A k: (0..<a.size-1) a(k) == a_in(k+1)
+
+            //the last element should be the original first element
+            a(a.size-1) == a_in(0)
+    }"""
+
+    var oldFront: Z = a(0)
+    var pos: Z = 0
+    while (pos < a.size-1) {
+        l"""{
+            invariant
+                0 <= pos
+                pos <= a.size-1
+                //sizes don't change (list in postcondition and invariant)
+                a.size == a_in.size
+                //the elements I've stepped through so far HAVE been shifted
+                A k: (0..<pos) a(k) == a_in(k+1)
+                //the elements I haven't stepped through so far HAVEN'T been changed
+                A k: (pos..<a.size) a(k) == a_in(k)
+                //need to know what oldFront is for the update after the loop
+                oldFront == a_in(0)
+            modifies pos, a
+        }"""
+        a(pos) = a(pos+1)
+        pos = pos + 1
+    }
+
+    a(a.size-1) = oldFront
+}
+
+//////////// Test code //////////////
+var test: ZS = ZS(2,4,6,8,10)
+leftShift(test)
+
+assert(test == ZS(4,6,8,10,2))
+
+test = ZS(5,10)
+leftShift(test)
+
+assert(test == ZS(10, 5))
