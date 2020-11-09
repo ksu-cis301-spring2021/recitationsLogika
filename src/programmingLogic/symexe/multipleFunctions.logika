@@ -1,0 +1,37 @@
+//SYMEXE MODE
+
+import org.sireum.logika._
+
+def add1(num: Z): Z = {
+    l"""{
+        requires num >= 0
+        ensures result == num + 1
+    }"""
+
+    return num + 1
+}
+
+def sub1(num: Z): Z = {
+    l"""{
+        requires num >= 1
+        ensures result == num - 1
+    }"""
+
+    return num - 1
+}
+
+/////////// Test code //////////////
+
+//if we want to call add1, what do we need to show first?
+
+//after we call add1, what can we deduce?
+
+var test: Z = readInt()
+val orig: Z = test
+if (test >= 0) {
+    var addVal: Z = add1(test)
+
+    var subVal: Z = sub1(addVal)   //why have we met the precondition?
+
+    assert(test == orig)
+}

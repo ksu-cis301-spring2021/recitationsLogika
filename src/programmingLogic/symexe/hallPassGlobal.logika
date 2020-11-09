@@ -1,0 +1,94 @@
+//SYMEXE MODE
+
+import org.sireum.logika._
+
+l"""{
+    //pos start at the sequence size
+    //every time, subtract one
+    fact
+        def sumPasses(list: BS, pos: Z): Z
+            = 0, if pos == 0        (sum0)
+            = 1 + sumPasses(list, pos-1),
+                if pos >= 1 ^ list(pos-1)   (sumTrue)
+            = sumPasses(list, pos-1),
+                if pos >= 1 ^ !list(pos-1)   (sumFalse)
+}"""
+
+//list: (true,false,true)
+//sumPasses(list, 3) -> 1 + sumPasses(list, 2)
+                        // -> sumPasses(list, 1) -> 1 + sumPasses(list, 0)
+                        //total: 2 (number of trues)
+
+var passesAvailable: Z = 3
+var passesOut: BS = BS(false,false,false,false,false)   //5 students in the class
+val totalPasses: Z = passesAvailable
+
+//add global invariant
+l"""{
+    invariant
+        passesAvailable >= 0
+        passesAvailable <= totalPasses
+        passesOut.size == 5     //the size of the sequence doesn't change
+        totalPasses == passesAvailable + sumPasses(passesOut, passesOut.size)
+}"""
+
+def takeHallPass(studentPos: Z): Unit = {
+    l"""{
+        requires
+            studentPos >= 0
+            studentPos < passesOut.size
+            passesOut(studentPos) == false //that student doesn't already have a hall pass
+            passesAvailable >= 1
+        modifies passesOut, passesAvailable  //list global variables that are modified
+        ensures
+            //describe how global variables will change at the end of function call
+            passesOut.size == passesOut_in.size //the sequence size doesn't change in the function
+            passesAvailable == passesAvailable_in - 1   //function subtracts one from passesAvailable
+            passesOut(studentPos) == true
+
+            //every other value in the sequence doesn't change in the function
+            A k: (0..<passesOut.size) (k != studentPos) -> passesOut(k) == passesOut_in(k)
+    }"""
+    passesOut(studentPos) = true
+    passesAvailable = passesAvailable - 1
+}
+
+def returnHallPass(studentPos: Z): Unit = {
+    l"""{
+        requires
+            studentPos >= 0
+            studentPos < passesOut.size
+            passesOut(studentPos) == true //that student does already have a hall pass
+            passesAvailable < totalPasses
+        modifies passesOut, passesAvailable  //list global variables that are modified
+        ensures
+            //describe how global variables will change at the end of function call
+            passesOut.size == passesOut_in.size //the sequence size doesn't change in the function
+            passesAvailable == passesAvailable_in + 1   //function adds one to passesAvailable
+            passesOut(studentPos) == false
+
+            //every other value in the sequence doesn't change in the function
+            A k: (0..<passesOut.size) (k != studentPos) -> passesOut(k) == passesOut_in(k)
+    }"""
+    passesOut(studentPos) = false
+    passesAvailable = passesAvailable + 1
+}
+
+
+/////// Test code //////////
+assert(passesAvailable == 3)
+
+takeHallPass(0)
+assert (passesOut == BS(true, false, false, false, false) & passesAvailable == 2)
+
+takeHallPass(2)
+assert (passesOut == BS(true, false, true, false, false) & passesAvailable == 1)
+
+takeHallPass(4)
+assert (passesOut == BS(true, false, true, false, true) & passesAvailable == 0)
+
+returnHallPass(2)
+assert (passesOut == BS(true, false, false, false, true) & passesAvailable == 1)
+
+returnHallPass(0)
+assert (passesOut == BS(false, false, false, false, true) & passesAvailable == 2)

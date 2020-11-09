@@ -1,0 +1,61 @@
+//MANUAL MODE
+
+import org.sireum.logika._
+
+//restriction: we only want to be working with non-negative numbers
+
+def add1(num: Z): Z = {
+    l""" {
+        requires num >= 0       //precondition
+        ensures result == num+1 //postcondition
+    }"""
+    var added: Z = num + 1
+    l"""{
+        1. added == num + 1     premise
+    }"""
+    return added
+}
+
+def sub1(num: Z): Z = {
+    l"""{
+        requires num >= 1       //precondition
+        ensures result == num-1 //postcondition
+    }"""
+    var subRes: Z = num - 1
+    l"""{
+        1. subRes == num - 1    premise
+    }"""
+    return subRes
+}
+
+/////////// Test code //////////////
+
+//if we want to call add1, what do we need to show first?
+
+//after we call add1, what can we deduce?
+
+var test: Z = readInt()
+val orig: Z = test
+if (test >= 0) {
+    l"""{
+        1. test >= 0            premise //this satisfies the add1 precondition
+    }"""
+    var addVal: Z = add1(test)  //why have we met the precondition?
+    l"""{
+        1. addVal == test+1     premise     //this is what we get from the add1 postcondition
+        2. test >= 0            premise
+        3. addVal >= 1          algebra 1 2
+    }"""
+
+    var subVal: Z = sub1(addVal)   //need to meet the precondition (that addVal >= 1)
+
+    l"""{
+        1. subVal == addVal - 1 premise     //from the sub1 postcondition
+        2. orig == test         premise     //from the original assignment
+        3. addVal == test + 1   premise     //from the previous logic block
+        4. addVal == orig + 1   algebra 2 3
+        5. subVal == orig + 1 -1    algebra 1 4
+        6. subVal == orig           algebra 5
+    }"""
+    assert(subVal == orig)
+}
