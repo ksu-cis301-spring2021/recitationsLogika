@@ -1,0 +1,41 @@
+Final exam: Wednesday, December 9
+    - can start anytime that day
+    - will have 2 hours to take exam once you start
+    - make sure to start by 10:00 pm
+
+Cumulative. 20% of your final grade.
+    - Exams 1 and 2 were each 17.5% of your final grade
+    - Final exam is in a different category in Canvas
+    - I recommend pulling up all three proof guides
+        - propositional logic
+        - predicate logic
+        - programming logic
+    - I'll post a blank Logika project for you to clone beforehand
+    - I recommend looking at all exam 1 and exam 2 solutions
+        and reviewing all homework solutions
+
+Topics:
+    - Logical reasoning, knights and knaves
+    - Truth tables
+    - Translating between English and propositional logic
+    - Proofs in propositional logic
+    - Translating between English and predicate logic
+    - Proofs in predicate logic
+    - Programming logic
+        - Assume, assert
+        - Algebra, subst
+        - Validating programs to get asserts to hold at the end:
+            - Programs with variable assignments/updates (manual mode)
+            - Programs with conditional statements (manual mode)
+            - Programs with function contracts and loops (manual mode and symexe mode)
+                - Writing proof facts
+                - Writing function contracts
+                - Writing loop invariants
+            - Functions with sequences (symexe mode)
+            - Programs with global invariants and possibly multiple functions (symexe mode)
+        - Proving total correctness by adding proof of termination
+
+Review problems.
+    - these do not cover all possible problems!
+    - please also review past exam solutions, past HW solutions, past lecture/recitation
+        examples and videos

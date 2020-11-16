@@ -1,0 +1,16 @@
+(p ^ q) -> r, r -> s, q ^ !s |- !p
+{
+    1. (p ^ q) -> r             premise
+    2. r -> s                   premise
+    3. q ^ !s                   premise
+    4. {
+        5. p                    assume
+        6. q                    ^e1 3
+        7. !s                   ^e2 3
+        8. p ^ q                ^i 5 6
+        9. r                    ->e 1 8
+        10. s                   ->e 2 9
+        11. _|_                 !e 10 7
+    }
+    13. !p                      !i 4
+}

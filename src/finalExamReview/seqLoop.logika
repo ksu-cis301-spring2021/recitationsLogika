@@ -1,0 +1,40 @@
+import org.sireum.logika._
+
+//SYMEXE mode
+
+def addToNeg(a: ZS): Unit = {
+    l"""{
+        modifies a
+        ensures
+            a.size == a_in.size //sequence size doesn't change
+            A k: (0..<a.size) a_in(k) >= 0 -> a(k) == a_in(k)    //original seq. values that weren't negative don't change
+            A k: (0..<a.size) a_in(k) < 0 -> a(k) == a_in(k) + 1 //original seq. values that WERE negative are one bigger than the original value
+    }"""
+    var i: Z = 0
+
+    while (i < a.size) {
+        l"""{
+            invariant
+                0 <= i      //specify range of loop counter
+                i <= a.size
+                a.size == a_in.size //restate that size doesn't change
+                A k: (0..<i) a_in(k) >= 0 -> a(k) == a_in(k) //postcondition part 2 of sequence I've looked at so far
+                A k: (0..<i) a_in(k) < 0 -> a(k) == a_in(k) + 1 //postcondition part 3 of sequence I've looked at so far
+                A k: (i..<a.size) a(k) == a_in(k) //everything after i is unchanged so far
+            modifies a, i
+        }"""
+
+        if (a(i) < 0) {
+            a(i) = a(i) + 1
+        }
+
+        i = i + 1
+    }
+}
+
+/////// Test code ////////////
+var test: ZS = ZS(-3, -4, 0, 1, -1, 5, 6, -7)
+
+addToNeg(test)
+
+assert (test == ZS(-2, -3, 0, 1, 0, 5, 6, -6))

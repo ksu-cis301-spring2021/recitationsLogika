@@ -1,0 +1,40 @@
+import org.sireum.logika._
+
+//MANUAL MODE
+
+var num: Z = readInt()
+val origNum: Z = num
+
+l"""{
+    1. origNum == num   premise
+}"""
+
+if (num < 0) {
+    num = num - 1
+
+    l"""{
+        1. num == num_old - 1               premise //from the variable update
+        2. num_old < 0                      premise //from the condition
+        3. origNum == num_old               premise //from the previous initialization
+        4. origNum < 0                      algebra 2 3
+        5. num == origNum - 1               algebra 1 3
+        6. origNum >= 0 V num == origNum - 1  Vi2 5
+        7. origNum < 0 V num == origNum + 1    Vi1 4
+    }"""
+} else {
+    num = num + 1
+
+    l"""{
+        1. num == num_old + 1               premise //from the variable update
+        2. !(num_old < 0)                   premise //from the condition (must not have been true)
+        3. origNum == num_old               premise //from the previous initialization
+        4. num_old >= 0                     algebra 2
+        5. origNum >= 0                     algebra 3 4
+        6. num == origNum + 1               algebra 1 3
+        7. origNum >= 0 V num == origNum - 1    Vi1 5
+        8. origNum < 0 V num == origNum + 1     Vi2 6
+    }"""
+}
+
+assert(origNum >= 0 | num == origNum - 1)
+assert(origNum < 0 | num == origNum + 1)
