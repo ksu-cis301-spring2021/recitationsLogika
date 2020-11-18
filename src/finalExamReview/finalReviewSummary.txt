@@ -28,7 +28,6 @@ Topics:
             - Programs with variable assignments/updates (manual mode)
             - Programs with conditional statements (manual mode)
             - Programs with function contracts and loops (manual mode and symexe mode)
-                - Writing proof facts
                 - Writing function contracts
                 - Writing loop invariants
             - Functions with sequences (symexe mode)
