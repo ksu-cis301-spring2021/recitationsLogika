@@ -41,6 +41,7 @@ if (numShirts >= 4) {
 //If there were fewer than 4 shirts, newTotal is previousTotal + $18/shirt
     //!(numShirts >= 4) -> newTotal == previousTotal + numShirts*18
 
+//p->q is equivalent to !p V q. Will rewrite assertions in that form.
 //rewrite of the form !p V q
 
 assert(!(numShirts >= 4) | newTotal == previousTotal + numShirts*15)

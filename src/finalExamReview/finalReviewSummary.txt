@@ -1,4 +1,4 @@
-Final exam: Wednesday, December 9
+Final exam: Wednesday, May 12
     - can start anytime that day
     - will have 2 hours to take exam once you start
     - make sure to start by 10:00 pm
@@ -32,7 +32,6 @@ Topics:
                 - Writing loop invariants
             - Functions with sequences (symexe mode)
             - Programs with global invariants and possibly multiple functions (symexe mode)
-        - Proving total correctness by adding proof of termination
 
 Review problems.
     - these do not cover all possible problems!
